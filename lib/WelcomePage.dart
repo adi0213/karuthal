@@ -3,16 +3,16 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:new_chilla/signup.dart';
+import 'package:new_chilla/CreateAccount.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class WelcomePage extends StatefulWidget {
+  const WelcomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<WelcomePage> createState() => _WelcomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _WelcomePageState extends State<WelcomePage> {
   final List<String> images = [
     'assets/karuthal1.png',
     'assets/karuthal2.png',
@@ -99,7 +99,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Signup()),
+                      MaterialPageRoute(builder: (context) => CreateAccount()),
                     );
                   },
                   child: Text(

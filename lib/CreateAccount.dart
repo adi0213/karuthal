@@ -2,16 +2,16 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_chilla/design.dart';
-import 'package:new_chilla/home.dart';
+import 'package:new_chilla/WelcomePage.dart';
 
-class Signup extends StatefulWidget {
-  const Signup({super.key});
+class CreateAccount extends StatefulWidget {
+  const CreateAccount({super.key});
 
   @override
-  State<Signup> createState() => _SignupState();
+  State<CreateAccount> createState() => _CreateAccountState();
 }
 
-class _SignupState extends State<Signup> {
+class _CreateAccountState extends State<CreateAccount> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _emailController = TextEditingController();
@@ -122,7 +122,7 @@ class _SignupState extends State<Signup> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => HomePage()),
+                                        builder: (context) => WelcomePage()),
                                   );
                                 }
                               },
