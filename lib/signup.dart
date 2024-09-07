@@ -119,7 +119,11 @@ class _SignupState extends State<Signup> {
                               ),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  // Perform signup action
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => HomePage()),
+                                  );
                                 }
                               },
                               child: Text(
@@ -215,14 +219,7 @@ class _SignupState extends State<Signup> {
                                             GoogleFonts.robotoFlex().fontFamily,
                                       ),
                                       recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomePage1()),
-                                          );
-                                        },
+                                        ..onTap = () {},
                                     ),
                                   ],
                                 ),
