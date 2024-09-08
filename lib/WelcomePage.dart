@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-import 'package:new_chilla/CreateAccount.dart';
+import 'package:new_chilla/dashboard.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -99,7 +99,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => CreateAccount()),
+                      MaterialPageRoute(builder: (context) => Dashboard()),
                     );
                   },
                   child: Text(

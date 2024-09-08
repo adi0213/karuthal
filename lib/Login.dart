@@ -1,20 +1,22 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:new_chilla/Login.dart';
-import 'package:new_chilla/design.dart';
-import 'package:new_chilla/WelcomePage.dart';
+import 'package:new_chilla/CreateAccount.dart';
+import 'package:new_chilla/Error.dart';
 
-class CreateAccount extends StatefulWidget {
-  const CreateAccount({super.key});
+import 'package:new_chilla/dashboard.dart';
+import 'package:new_chilla/design.dart';
+
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<CreateAccount> createState() => _CreateAccountState();
+  State<Login> createState() => _LoginState();
 }
 
-class _CreateAccountState extends State<CreateAccount> {
+class _LoginState extends State<Login> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
@@ -29,42 +31,29 @@ class _CreateAccountState extends State<CreateAccount> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsets.all(20.0),
+                  padding: EdgeInsets.all(20.0),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const SizedBox(height: 30),
+                        SizedBox(height: 30),
                         Center(
                           child: Text(
-                            'Create Account',
+                            'Log in',
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineLarge
                                 ?.copyWith(
-                                  color: Color(0xFF57CC99),
+                                  color: const Color(0xFF57CC99),
                                   fontFamily:
                                       GoogleFonts.anekGurmukhi().fontFamily,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 40.0,
+                                  fontSize: 40,
                                 ),
                           ),
                         ),
-                        const SizedBox(height: 30),
-                        _buildLabelText(context, "User Name"),
-                        const SizedBox(height: 2),
-                        _buildProjectedTextFormField(
-                          controller: _usernameController,
-                          isPassword: false,
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your username';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: 30),
                         _buildLabelText(context, "Email"),
                         const SizedBox(height: 2),
                         _buildProjectedTextFormField(
@@ -79,56 +68,70 @@ class _CreateAccountState extends State<CreateAccount> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 20),
+                        SizedBox(height: 20),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             _buildLabelText(context, "Password"),
-                            Row(children: [
-                              IconButton(
-                                icon: Icon(
-                                  color: Color(0xFF838181),
-                                  _isPasswordVisible
-                                      ? Icons.visibility_off
-                                      : Icons.visibility,
+                            Row(
+                              children: [
+                                IconButton(
+                                  icon: Icon(
+                                    color: const Color(0xFF838181),
+                                    _isPasswordVisible
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _isPasswordVisible = !_isPasswordVisible;
+                                    });
+                                  },
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    _isPasswordVisible = !_isPasswordVisible;
-                                  });
-                                },
-                              ),
-                              Text(
-                                _isPasswordVisible ? 'Unhide' : 'Hide',
-                                style: TextStyle(
-                                  color: const Color(0xFF838181),
-                                  fontSize: 16,
-                                ),
-                              )
-                            ]),
+                                Text(
+                                  _isPasswordVisible ? 'Unhide' : 'Hide',
+                                  style: TextStyle(
+                                    color: const Color(0xFF838181),
+                                    fontSize: 16,
+                                  ),
+                                )
+                              ],
+                            ),
                           ],
                         ),
                         const SizedBox(height: 2),
                         _buildPasswordField(),
-                        const SizedBox(height: 40),
+                        const SizedBox(height: 2),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => work(),
+                              ),
+                            );
+                          },
+                          child: _buildLabelText(context, "Forgot Password ?"),
+                        ),
+                        SizedBox(height: 40),
                         Center(
                           child: SizedBox(
                             height: 48.0,
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xFF57CC99),
+                                backgroundColor: const Color(0xFF57CC99),
                               ),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => WelcomePage()),
+                                        builder: (context) => Dashboard()),
                                   );
                                 }
                               },
                               child: Text(
-                                "Sign Up",
+                                "Log in",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 25,
@@ -152,17 +155,49 @@ class _CreateAccountState extends State<CreateAccount> {
                         clipper: BottomWaveClipper(),
                         child: Container(
                           width: double.infinity,
-                          color: Color(0xFFC7F9DE),
+                          color: const Color(0xFFC7F9DE),
                         ),
                       ),
                       Positioned(
-                        bottom: 0,
+                        top: 0,
                         left: 0,
                         right: 0,
                         child: Image.asset(
-                          'assets/image.png',
-                          height: 700,
+                          'assets/oldcare2.png',
+                          height: 250,
                           fit: BoxFit.contain,
+                        ),
+                      ),
+                      Positioned(
+                        bottom: 150,
+                        left: 0,
+                        right: 0,
+                        child: Center(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              SizedBox(
+                                width: 175,
+                                child: const Divider(
+                                  height: 1,
+                                  color: Color(0x66666666),
+                                ),
+                              ),
+                              const Text(
+                                "Or",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0x66666666)),
+                              ),
+                              SizedBox(
+                                width: 175,
+                                child: const Divider(
+                                  height: 1,
+                                  color: Color(0x66666666),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       Positioned(
@@ -170,70 +205,24 @@ class _CreateAccountState extends State<CreateAccount> {
                         left: 0,
                         right: 0,
                         child: Center(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SizedBox(
-                                height: 48.0,
-                                child: ElevatedButton(
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                  ),
-                                  onPressed: () {},
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: [
-                                      Text(
-                                        "Sign in with ",
-                                        style: TextStyle(
-                                          color: const Color(0xFF57CC99),
-                                          fontSize: 20,
-                                          fontFamily:
-                                              GoogleFonts.signika().fontFamily,
-                                        ),
-                                      ),
-                                      const SizedBox(width: 8),
-                                      Image.asset(
-                                        'assets/google_logo.png',
-                                        height: 30.0,
-                                        width: 30.0,
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                          child: GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => CreateAccount()),
+                              );
+                            },
+                            child: Text(
+                              'Create an account',
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFF296685),
+                                fontFamily: GoogleFonts.robotoFlex().fontFamily,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Color(0xFF296685),
                               ),
-                              const SizedBox(height: 30),
-                              RichText(
-                                text: TextSpan(
-                                  text: 'Already have an account? ',
-                                  style: TextStyle(
-                                    color: const Color(0xFF38A3A5),
-                                    fontSize: 18,
-                                    fontFamily:
-                                        GoogleFonts.robotoFlex().fontFamily,
-                                  ),
-                                  children: [
-                                    TextSpan(
-                                      text: 'Log in',
-                                      style: TextStyle(
-                                        color: const Color(0xFF296685),
-                                        fontWeight: FontWeight.normal,
-                                        fontFamily:
-                                            GoogleFonts.robotoFlex().fontFamily,
-                                      ),
-                                      recognizer: TapGestureRecognizer()
-                                        ..onTap = () {
-                                          Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) => Login()),
-                                          );
-                                        },
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
+                            ),
                           ),
                         ),
                       ),
@@ -254,7 +243,7 @@ class _CreateAccountState extends State<CreateAccount> {
       child: Text(
         labelText,
         style: TextStyle(
-          color: Color(0xFF838181),
+          color: const Color(0xFF838181),
           fontSize: 16,
           fontFamily: GoogleFonts.roboto().fontFamily,
         ),
@@ -283,7 +272,7 @@ class _CreateAccountState extends State<CreateAccount> {
         ),
         child: TextFormField(
           controller: controller,
-          cursorColor: Color(0xFF838181),
+          cursorColor: const Color(0xFF838181),
           obscureText: isPassword ? !_isPasswordVisible : false,
           decoration: const InputDecoration(
             border: InputBorder.none,
@@ -291,6 +280,7 @@ class _CreateAccountState extends State<CreateAccount> {
                 EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
           ),
           validator: validator,
+          style: TextStyle(fontSize: 14),
         ),
       ),
     );
@@ -303,14 +293,6 @@ class _CreateAccountState extends State<CreateAccount> {
       validator: (value) {
         if (value == null || value.isEmpty) {
           return 'Please enter your password';
-        } else if (!RegExp(r'(?=.*[a-z])').hasMatch(value)) {
-          return 'Password must contain at least one lowercase letter';
-        } else if (!RegExp(r'(?=.*[A-Z])').hasMatch(value)) {
-          return 'Password must contain at least one uppercase letter';
-        } else if (!RegExp(r'(?=.*\d)').hasMatch(value)) {
-          return 'Password must contain at least one digit';
-        } else if (!RegExp(r'(?=.*[!@#\$&*~])').hasMatch(value)) {
-          return 'Password must contain at least one special character';
         }
         return null;
       },
