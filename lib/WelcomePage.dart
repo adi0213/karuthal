@@ -1,9 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:new_chilla/Login.dart';
 import 'dart:async';
-
-import 'package:new_chilla/dashboard.dart';
 
 class WelcomePage extends StatefulWidget {
   const WelcomePage({super.key});
@@ -99,7 +98,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => Dashboard()),
+                      MaterialPageRoute(builder: (context) => Login()),
                     );
                   },
                   child: Text(

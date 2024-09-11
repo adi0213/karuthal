@@ -1,9 +1,9 @@
-import 'package:flutter/gestures.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 import 'package:new_chilla/CreateAccount.dart';
 import 'package:new_chilla/Error.dart';
-
 import 'package:new_chilla/dashboard.dart';
 import 'package:new_chilla/design.dart';
 
@@ -20,6 +20,43 @@ class _LoginState extends State<Login> {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isPasswordVisible = false;
+
+  Future<void> _login() async {
+    const String url =
+        'http://104.237.9.211:8007/karuthal/api/v1/usermanagement/login';
+    final Map<String, dynamic> body = {
+      "username": _emailController.text,
+      "password": _passwordController.text,
+    };
+
+    final Map<String, String> headers = {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+    };
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: headers,
+        body: jsonEncode(body),
+      );
+
+      if (response.statusCode == 200) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => Dashboard()),
+        );
+      } else {
+        print('Login failed with status code: ${response.statusCode}');
+        print('Error message: ${response.body}');
+      }
+    } catch (e) {
+      print('Error occurred: $e');
+      if (e is http.ClientException) {
+        print('Possible CORS or network error.');
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +99,9 @@ class _LoginState extends State<Login> {
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Please enter your email';
-                            } else if (!value.contains('@')) {
+                            } /* else if (!value.contains('@')) {
                               return 'Please enter a valid email';
-                            }
+                            }*/
                             return null;
                           },
                         ),
@@ -123,11 +160,8 @@ class _LoginState extends State<Login> {
                               ),
                               onPressed: () {
                                 if (_formKey.currentState!.validate()) {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Dashboard()),
-                                  );
+                                  // Call the login function here
+                                  _login();
                                 }
                               },
                               child: Text(
@@ -169,7 +203,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Positioned(
-                        bottom: 150,
+                        bottom: 50,
                         left: 0,
                         right: 0,
                         child: Center(
@@ -201,7 +235,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Positioned(
-                        bottom: 100,
+                        bottom: 10,
                         left: 0,
                         right: 0,
                         child: Center(
