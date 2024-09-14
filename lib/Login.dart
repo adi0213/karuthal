@@ -203,7 +203,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Positioned(
-                        bottom: 50,
+                        bottom: 150,
                         left: 0,
                         right: 0,
                         child: Center(
@@ -235,7 +235,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Positioned(
-                        bottom: 10,
+                        bottom: 90,
                         left: 0,
                         right: 0,
                         child: Center(
